@@ -1,0 +1,8 @@
+# For getting recommendation for a user
+curl --location --globoff 'http://128.2.205.118:8082/recommend/{{USER_ID}}'
+
+# For file creation (Auromatically triggered every night)
+curl 'http://128.2.205.118:8082/telemetry/create-next-day'
+
+# Application heartbeat
+curl 'http://128.2.205.118:8082/status'

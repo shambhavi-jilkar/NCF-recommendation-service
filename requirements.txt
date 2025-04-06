@@ -1,0 +1,22 @@
+scikit-surprise==1.1.4
+# sqlite
+pytz==2024.1
+numpy<2.0.0
+pandas>=1.5.3
+scikit-learn>=1.6.1
+matplotlib>=3.9.4
+django>=4.2.5
+python-dotenv>=1.0.1
+openai>=1.63.2
+httpx>=0.28.1
+pydantic>=2.10.6
+sqlalchemy>=2.0.38
+nose2==0.15.1
+torch==2.4.0
+requests==2.32.3
+apscheduler==3.11.0
+flask
+scipy
+statsmodels
+watchdog>=2.3.1
+gunicorn>=20.1.0
