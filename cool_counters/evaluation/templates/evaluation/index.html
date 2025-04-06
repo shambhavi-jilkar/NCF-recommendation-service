@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Evaluation Dashboard</title>
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    .container { margin: 0 auto; max-width: 800px; }
+    .title { font-size: 1.5em; font-weight: bold; margin-bottom: 1em; }
+    table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 8px; }
+    th { background-color: #f9f9f9; }
+    .error { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="title">Evaluation Dashboard</div>
+  <form action="{% url 'evaluation:evaluate' %}" method="get">
+    <label>Select Timeframe:</label>
+    <select name="timeframe">
+      <option value="LastHour" {% if timeframe == 'LastHour' %}selected{% endif %}>Last Hour</option>
+      <option value="Last24Hours" {% if timeframe == 'Last24Hours' %}selected{% endif %}>Last 24 Hours</option>
+      <option value="Last7Days" {% if timeframe == 'Last7Days' %}selected{% endif %}>Last 7 Days</option>
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  {% if timeframe %}
+    <h3>Results for timeframe: {{ timeframe }}</h3>
+    <table>
+      <tr>
+        <td>Total Recommended Items in Window</td>
+        <td>{{ num_recs }}</td>
+      </tr>
+      <tr>
+        <td>Recommended Items Actually Rated</td>
+        <td>{{ num_rated_recs }}</td>
+      </tr>
+      <tr>
+        <td>Mean Rating</td>
+        <td>{{ mean_rating }}</td>
+      </tr>
+      <tr>
+        <td>Rating Variance</td>
+        <td>{{ rating_variance }}</td>
+      </tr>
+    </table>
+
+    <h4>Rating Distribution</h4>
+    <ul>
+      {% for rating_value, count in rating_distribution.items %}
+        <li>Rating {{ rating_value }}: {{ count }} times</li>
+      {% endfor %}
+    </ul>
+
+    <hr />
+
+    <h3>Watch Time Metrics</h3>
+    <table>
+      <tr>
+        <td>Recommended Items Watched</td>
+        <td>{{ watched_recs }}</td>
+      </tr>
+      <tr>
+        <td>Watch Coverage (fraction watched)</td>
+        <td>{{ watch_coverage }}</td>
+      </tr>
+      <tr>
+        <td>Average Watch Time (minutes)</td>
+        <td>{{ avg_watch_time }}</td>
+      </tr>
+    </table>
+  {% endif %}
+</div>
+</body>
+</html>
